@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 18th Birthday Abhisek 🎉</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background: linear-gradient(135deg,#ff5f7e,#ff9aa2);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:#fff;
+    overflow:hidden;
+}
+
+.card{
+    width:95%;
+    max-width:420px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(14px);
+    border-radius:22px;
+    padding:20px;
+    text-align:center;
+    box-shadow:0 15px 35px rgba(0,0,0,0.3);
+    z-index:2;
+}
+
+h1{
+    font-size:1.9rem;
+}
+
+h2{
+    font-size:1.3rem;
+    font-weight:400;
+    margin-bottom:12px;
+}
+
+.wish{
+    font-size:0.95rem;
+    line-height:1.6;
+    margin-bottom:18px;
+}
+
+/* Slider */
+.slider{
+    overflow:hidden;
+    border-radius:16px;
+    margin-bottom:15px;
+}
+
+.track{
+    display:flex;
+    width:calc(180px * 14);
+    animation: scroll 22s linear infinite;
+}
+
+.track img{
+    width:180px;
+    height:320px; /* 9:16 */
+    object-fit:cover;
+    margin:0 6px;
+    border-radius:14px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.35);
+}
+
+@keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+}
+
+/* Buttons */
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    margin-top:10px;
+}
+
+button{
+    border:none;
+    padding:10px 16px;
+    border-radius:30px;
+    font-size:0.85rem;
+    font-weight:500;
+    cursor:pointer;
+}
+
+.music-btn{
+    background:#fff;
+    color:#ff4d6d;
+}
+
+.share-btn{
+    background:#25D366;
+    color:#fff;
+}
+
+footer{
+    margin-top:10px;
+    font-size:0.75rem;
+    opacity:0.85;
+}
+
+/* Confetti canvas */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    z-index:1;
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="card">
+    <h1>🎂 Happy 18th Birthday 🎂</h1>
+    <h2>Abhisek</h2>
+
+    <p class="wish">
+        Happy 18th Birthday, Abhisek! 🎉  
+        May this special milestone bring you confidence, success and endless happiness.
+        Keep chasing your dreams, believe in yourself and enjoy every moment of this
+        beautiful journey ahead. ✨
+    </p>
+
+    <div class="slider">
+        <div class="track">
+            <img src="IMG_20250615_210340789_HDR.jpg">
+            <img src="IMG_20250626_181540505.jpg">
+            <img src="IMG_20250626_182155798.jpg">
+            <img src="IMG_20250626_190557260.jpg">
+            <img src="WhatsApp Image 2025-12-28 at 8.14.54 AM.jpeg">
+            <img src="WhatsApp Image 2025-12-28 at 8.17.59 AM.jpeg">
+            
+
+            <!-- repeat for smooth loop -->
+            <img src="IMG_20250615_210340789_HDR.jpg">
+            <img src="IMG_20250626_181540505.jpg">
+            <img src="IMG_20250626_182155798.jpg">
+            <img src="IMG_20250626_190557260.jpg">
+            <img src="WhatsApp Image 2025-12-28 at 8.14.54 AM.jpeg">
+            <img src="WhatsApp Image 2025-12-28 at 8.17.59 AM.jpeg">
+            
+        </div>
+    </div>
+
+    <div class="buttons">
+        <button class="music-btn" onclick="toggleMusic()">🎵 Music</button>
+        <button class="share-btn" onclick="shareWhatsApp()">📲 Share</button>
+    </div>
+
+    <footer>💖 Made with love 💖</footer>
+</div>
+
+<!-- Background Music -->
+<audio id="bgMusic" src="happy-birthday-138622.mp3" loop></audio>
+
+<script>
+/* --------- Background Music Auto Play --------- */
+const music = document.getElementById("bgMusic");
+let isPlaying = false;
+
+function enableMusic(){
+    music.play().then(()=>{
+        isPlaying = true;
+    }).catch(()=>{});
+    document.removeEventListener("click", enableMusic);
+    document.removeEventListener("touchstart", enableMusic);
+}
+
+document.addEventListener("click", enableMusic);
+document.addEventListener("touchstart", enableMusic);
+
+function toggleMusic(){
+    if(isPlaying){
+        music.pause();
+        isPlaying = false;
+    }else{
+        music.play();
+        isPlaying = true;
+    }
+}
+
+/* --------- WhatsApp Share --------- */
+function shareWhatsApp(){
+    let text = "🎂 Happy 18th Birthday Abhisek! 🎉\nWishing you success, happiness and unforgettable memories ✨";
+    let url = window.location.href;
+    window.open(`https://wa.me/?text=${encodeURIComponent(text + "\n" + url)}`);
+}
+
+/* --------- Confetti Animation --------- */
+const canvas = document.getElementById("confetti");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let confetti = [];
+
+for(let i=0;i<180;i++){
+    confetti.push({
+        x:Math.random()*canvas.width,
+        y:Math.random()*canvas.height,
+        r:Math.random()*6+2,
+        d:Math.random()*4+1,
+        color:`hsl(${Math.random()*360},100%,50%)`
+    });
+}
+
+function drawConfetti(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    confetti.forEach(c=>{
+        ctx.beginPath();
+        ctx.arc(c.x,c.y,c.r,0,Math.PI*2);
+        ctx.fillStyle=c.color;
+        ctx.fill();
+    });
+    updateConfetti();
+}
+
+function updateConfetti(){
+    confetti.forEach(c=>{
+        c.y += c.d;
+        if(c.y > canvas.height){
+            c.y = -10;
+            c.x = Math.random()*canvas.width;
+        }
+    });
+}
+
+setInterval(drawConfetti,30);
+</script>
+
+</body>
+</html>
